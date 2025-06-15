@@ -23,7 +23,7 @@ public class Alumno {
 	@Id
 	int matricula;
 	/**
-	 * Nombre del alumno 
+	 * Nombre del alumno
 	 */
 	String nombre;
 	String apellido_paterno;
