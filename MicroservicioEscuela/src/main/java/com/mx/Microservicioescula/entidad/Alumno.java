@@ -22,6 +22,9 @@ import lombok.NoArgsConstructor;
 public class Alumno {
 	@Id
 	int matricula;
+	/**
+	 * 
+	 */
 	String nombre;
 	String apellido_paterno;
 	String apellido_materno;
