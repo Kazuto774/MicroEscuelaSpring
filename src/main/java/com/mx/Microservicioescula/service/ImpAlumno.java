@@ -43,7 +43,6 @@ public class ImpAlumno implements MetodosAlumnos{
 
 	@Override
 	public void editar(Alumno alumno) {
-		// TODO Auto-generated method stub
 		Alumno alumno_aux = aluDao.findById(alumno.getMatricula()).orElse(null);
 		alumno_aux.setNombre(alumno.getNombre());
 		alumno_aux.setApellido_paterno(alumno.getApellido_paterno());
@@ -56,7 +55,6 @@ public class ImpAlumno implements MetodosAlumnos{
 
 	@Override
 	public void eliminar(Alumno alumno) {
-		// TODO Auto-generated method stub
 		alumno = aluDao.findById(alumno.getMatricula()).orElse(null);
 		if(alumno.getMaterias().isEmpty()) {
 			aluDao.delete(alumno);
@@ -72,7 +70,6 @@ public class ImpAlumno implements MetodosAlumnos{
 
 	@Override
 	public Respuesta buscar(Alumno alumno) {
-		// TODO Auto-generated method stub
 		Respuesta rs = new Respuesta();
 		alumno = aluDao.findById(alumno.getMatricula()).orElse(null);
 		if(alumno == null) {
@@ -91,7 +88,6 @@ public class ImpAlumno implements MetodosAlumnos{
 
 	@Override
 	public Respuesta mostrar() {
-		// TODO Auto-generated method stub
 		Respuesta rs = new Respuesta();
 		boolean hola = true;
 		if(hola){
@@ -117,9 +113,8 @@ public class ImpAlumno implements MetodosAlumnos{
 			rs.setMensaje("Este alumno no esta inscrito en nunguna materia");
 			rs.setSuccess(false);
 			rs.setObj(null);
-			return rs;
-			
-		}else {
+			return rs;	
+		} else {
 			List<MateriaDto> listaDao = new ArrayList<>();
 			for(Materia m: alumno.getMaterias()) {
 				listaDao.add(new MateriaDto(m.getNrc(), m.getMateria(), m.getCreditos(), m.getNivel()));
