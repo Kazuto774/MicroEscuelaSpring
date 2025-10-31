@@ -188,6 +188,7 @@ public class ImpMaterias implements MetodosMaterias{
 	 * @param am
 	 * @return
 	 */
+	@SuppressWarnings("null")
 	public Respuesta darDeBajaAlumno(PeticionAlumnoMateria am) {
 		Respuesta rs = new Respuesta();
 		Materia materia_aux = materiaDao.findById(am.getNrc_materia()).orElse(null);
@@ -208,7 +209,7 @@ public class ImpMaterias implements MetodosMaterias{
 			rs.setSuccess(false);
 			rs.setObj(am.getNrc_materia());
 			return rs;
-		}else {
+		} else {
 			int bandera = 0;
 			for(Alumno a: materia_aux.getAlumnos()) {
 				if(alumno_aux.getMatricula() == a.getMatricula()) {
@@ -232,35 +233,37 @@ public class ImpMaterias implements MetodosMaterias{
 	}
 
 	/**
+	 * Método para inscribir alumnos en una materia  
+	 * @param peticionAlumnoMateria Objeto que contiene la matricula del alumno y el NCR de la materia 
+	 * @return rs Result Set
 	 * @autor joramirezb
-	 * @param am
-	 * @return
 	 */
-	public Respuesta asignar(PeticionAlumnoMateria am) {
+	@SuppressWarnings("null")
+	public Respuesta asignar(PeticionAlumnoMateria peticionAlumnoMateria) {
 		Respuesta rs = new Respuesta();
-		Materia materia_aux = materiaDao.findById(am.getNrc_materia()).orElse(null);
-		Alumno alumno_aux = aluDao.findById(am.getMatricula_alumno()).orElse(null);
+		Materia materia_aux = materiaDao.findById(peticionAlumnoMateria.getNrc_materia()).orElse(null);
+		Alumno alumno_aux = aluDao.findById(peticionAlumnoMateria.getMatricula_alumno()).orElse(null);
 		if(materia_aux == null && alumno_aux == null) {
 			rs.setMensaje("Ni la materia ni el alumno existen");
 			rs.setSuccess(false);
-			rs.setObj(am);
+			rs.setObj(peticionAlumnoMateria);
 			return rs;
-		}else if(materia_aux != null && alumno_aux == null){
+		} else if(materia_aux != null && alumno_aux == null){
 			rs.setMensaje("el alumno no existen");
 			rs.setSuccess(false);
-			rs.setObj(am.getMatricula_alumno());
+			rs.setObj(peticionAlumnoMateria.getMatricula_alumno());
 			return rs;
-		}else if(materia_aux == null && alumno_aux != null){
+		} else if (materia_aux == null && alumno_aux != null){
 			rs.setMensaje("La materia no existe");
 			rs.setSuccess(false);
-			rs.setObj(am.getNrc_materia());
+			rs.setObj(peticionAlumnoMateria.getNrc_materia());
 			return rs;
-		}else {
-			for(Alumno a: materia_aux.getAlumnos()) {
-				if(alumno_aux.getMatricula() == a.getMatricula()) {
+		} else {
+			for (Alumno a: materia_aux.getAlumnos()) {
+				if (alumno_aux.getMatricula() == a.getMatricula()) {
 					rs.setMensaje("El alumno ya esta deado de alta en esta materia");
 					rs.setSuccess(false);
-					rs.setObj(am);
+					rs.setObj(peticionAlumnoMateria);
 					return rs;
 				}
 			}
@@ -268,7 +271,7 @@ public class ImpMaterias implements MetodosMaterias{
 			materiaDao.save(materia_aux);
 			rs.setMensaje("El alumno fue inscrito en la materia");
 			rs.setSuccess(true);
-			rs.setObj(am);
+			rs.setObj(peticionAlumnoMateria);
 			return rs;
 		}
 	}
